@@ -20,29 +20,75 @@
       {{ showDetail ? '隱藏詳細資料' : '顯示詳細資料' }}
     </button>
   </div>
+  <div> </div>
+  <div class="profile-my-card">
+    <h1>個人卡片</h1>
+    <p>{{ name }}</p>
+    <div class="profile-detail"  v-if="showDetail"> 
+      <p>年齡 : {{ age }}</p>
+      <p>職業 : {{ job }}</p>
+    </div>
+    <button class="myBt" @click="toggleDetail"> {{ showDetail?'隱藏':'顯示' }}</button>
+  </div>
+
 </template>
 
 <script>
+import { ref } from 'vue'
+
 export default {
   name: 'ProfileCard',
-  data() {
-    return {
-      name: 'John',
-      job: 'Engineer',
-      age: 15,
-      profileImage: 'https://via.placeholder.com/150x150/4CAF50/white?text=John',
-      showDetail: true
+  setup() {
+    // 使用 ref 創建響應式數據
+    const name = ref('John')
+    const job = ref('Engineer')
+    const age = ref(15)
+    const profileImage = ref('https://via.placeholder.com/150x150/4CAF50/white?text=John')
+    const showDetail = ref(true)
+    
+    // 定義方法
+    const toggleDetail = () => {
+      showDetail.value = !showDetail.value
     }
-  },
-  methods: {
-    toggleDetail() {
-      this.showDetail = !this.showDetail
+    
+    // 返回需要在模板中使用的數據和方法
+    return {
+      name,
+      job,
+      age,
+      profileImage,
+      showDetail,
+      toggleDetail
     }
   }
 }
 </script>
 
 <style scoped>
+.myBt{
+  background-color: #4CAF50;
+  border-color: #ddd;
+  shape-rendering: 0;
+  cursor: pointer;
+  color: white;
+  margin: 20px 0;
+  border-radius: 10px;
+  padding: 10px 25px;
+} 
+.profile-detail{
+  background-color: white;
+  border-radius: 10px;
+  padding: 15;
+}
+.profile-my-card{
+  height: 300px;
+  width: 300px;
+  background-color: #e1e1e1;
+  text-align: center;
+  border-radius: 20px;
+  padding: 20px;
+}
+
 .profile-card {
   max-width: 400px;
   margin: 20px auto;
